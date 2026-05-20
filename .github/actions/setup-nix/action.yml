@@ -23,6 +23,14 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: swap
+      shell: bash
+      run: |
+        sudo fallocate -l 16G /swap
+        sudo chmod 600 /swap
+        sudo mkswap /swap
+        sudo swapon /swap
+    
     - name: reclaim space (linux)
       if: runner.os == 'Linux' && inputs.system != 'riscv64-linux'
       uses: wimpysworld/nothing-but-nix@main
